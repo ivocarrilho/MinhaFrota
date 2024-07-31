@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Frota</title>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Minha Frota</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!-- <li class="nav-item active">
+          <a class="nav-link" href="index.html">Operações <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index2.html">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li> -->
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- Conteúdo Principal -->
+  <div id="conteudo" class="container-fluid">
+    
+    <h2>Controle de Veículos</h2>
+
+    <label>Usuário: </label> 
+    <label id="usuario">{{ usuario }}</label><br> 
+    <label>Empresa: </label> 
+    <label id="empresa">{{ empresa }}</label>
+
+    <div class="form-group">
+        <label>Filtrar</label>
+        <select class="form-control" id="filtro" name="campo">
+          <option value="nome">Motorista</option>
+          <option value="carro">Carro</option>
+          <option value="dataini">Data Inicial</option>
+        </select>
+        
+        <input class="filtro" type="date" id="filtro_dateini" name="filtro_dateini">  
+        
+        <input class="filtro" type="text" id="filtro-nome"  placeholder="Buscar por">     
+    </div> 
+
+    <button id="open-form-popup" type="button" class="btn-open-popup" data-toggle="modal" data-target="#form-popup">
+        Adicionar
+    </button>
+
+    <button id="generation-pdf" type="button" class="btn-pdf">
+      Baixar pdf
+    </button>
+
+    <div class="scrollable-table">
+      <table class="table table-striped" id="produtos-table">
+        <thead>
+          <tr>
+            <th colspan="13" style="text-align: center;">Relatório de Viagens</th>
+          </tr>
+          <tr>
+            <th>ID</th>
+            <th>Data Inicial</th>
+            <th>Data Final</th>
+            <th>Motorista</th>
+            <th>Carro</th>
+            <th>Hora Inicial</th>
+            <th>Hora Final</th>
+            <th>Km Inicial</th>
+            <th>Km Final</th>
+            <th>Km Percorrido</th>
+            <th>Trajeto</th>
+            <th>Observação</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="produtos-body">        
+          <!-- A tabela preenche dinamicamente -->
+        </tbody>
+      </table>  
+    </div>
+
+     <!-- Controles de navegação entre abas -->
+     <div class="pagination">
+        <!-- Os botoes são adicionados dinamicamente conforme o tamanho da tabela -->
+    </div>
+
+    <div class="container mt-5">
+      <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Nº Operações</h5>
+                    <p id="totalope" class="card-text"></p>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Km Percorridos</h5>
+                    <p id="totalkm" class="card-text"></p>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Abastecido</h5>
+                    <p id="totalabs" class="card-text">R$ 100</p>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Modal (Popup) -->
+    <div class="modal fade" id="form-popup" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="popupModalLabel">Adicionar Viagem</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulário com 11 campos -->
+             <form id="produto-form">
+                    <div class="form-group">
+                        <label for="dataini">*Data Inicial</label>
+                        <input class="form-control" type="date" id="dataini" name="dataini" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="datafin">*Data Final</label>
+                        <input class="form-control" type="date" id="datafin" name="datafin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nome">*Motorista</label>
+                        <input class="form-control" type="text" id="nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="carro">*Carro:</label>
+                        <select class="form-control" id="carro" name="carro" required>
+                          <option value="">Selecione o carro</option>
+                          <option value="S10-POV9368">S10-POV9368</option>
+                          <option value="S10-POL9C08">S10-POL9C08</option>
+                          <option value="Fiat-OIM6474">Fiat-OIM6474</option>
+                          <option value="Fiat-OCG9297">Fiat-OCG9297</option>
+                          <option value="HR-NQP6392">HR-NQP6392</option>
+                        </select>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="horaini">*Hora Inicial</label>
+                        <input class="form-control" type="time" id="horaini" name="horaini" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="horafin">Hora Final</label>
+                        <input class="form-control" type="time" id="horafin" name="horafin">
+                    </div>
+                    <div class="form-group">
+                        <label for="kmini">*Km Inicial</label>
+                        <input class="form-control" type="number" min="0" step="1" id="kmini" name="kmini" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kmfin">Km Final</label>
+                        <input class="form-control" type="number" min="0" step="1" id="kmfin" name="kmfin">
+                    </div>
+                    <div class="form-group">
+                      <label for="kmfin">*Destino</label>
+                      <input class="form-control" type="text" id="destino" name="destino" required>
+                  </div>
+                    <div class="form-group">
+                        <label for="observacao">Observação</label>
+                        <textarea class="form-control" id="observacao" name="observacao"></textarea>
+                    </div>
+                    <button id="btn-salvar" type="submit" class="btn-open-popup">Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- jQuery, Popper.js, Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+  <script src="scripts.js"></script>
+
+</body>
+</html>
