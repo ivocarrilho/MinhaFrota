@@ -1,7 +1,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
 
-    const IP = "192.168.1.61"; //IP ou URL do servidor
+    const IP = "52.38.87.209"; //IP ou URL do servidor
 
     // Formulario
     const openFormButton  = document.getElementById('open-form-popup');
