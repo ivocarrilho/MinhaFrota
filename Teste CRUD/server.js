@@ -51,8 +51,8 @@ app.post('/login', (req, res) => {
       if(data) {
         // res.sendFile(path.join(__dirname , 'public', '/index1.html')); 
         
-        console.log(data.name);
-        console.log(data.group);
+        //console.log(data.name);
+       //console.log(data.group);
 
         // Leitura do arquivo index.html
         let html = path.join(__dirname, 'public', 'index1.html');
