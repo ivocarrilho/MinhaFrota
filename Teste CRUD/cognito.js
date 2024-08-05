@@ -49,11 +49,11 @@ function Login(callback, username, password) {
 
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-            console.log('access token + ' + result.getAccessToken().getJwtToken());
-            console.log('id token + ' + result.getIdToken().getJwtToken()); 
-            console.log('refresh token + ' + result.getRefreshToken().getToken());
-            console.log('Grupo: ' + result.getIdToken().payload['cognito:groups']);
-            console.log('Nome: ' + result.getIdToken().payload['name']);
+            //console.log('access token + ' + result.getAccessToken().getJwtToken());
+            //console.log('id token + ' + result.getIdToken().getJwtToken()); 
+           // console.log('refresh token + ' + result.getRefreshToken().getToken());
+           // console.log('Grupo: ' + result.getIdToken().payload['cognito:groups']);
+           // console.log('Nome: ' + result.getIdToken().payload['name']);
              
             var user = {
                 group: '' + result.getIdToken().payload['cognito:groups'],
