@@ -1,0 +1,124 @@
+
+/* Estilo personalizado para a página */
+.container-fluid {
+  width: 90%;
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Importante para garantir que o padding e a borda não aumentem a largura */
+}
+
+.scrollable-table {
+  max-height: 100%; /* Altura máxima da tabela para scroll */
+  overflow-y: auto; /* Adiciona scroll vertical quando necessário */
+}
+
+.popup-form {
+  display: none;
+  background: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+/* Estilos para o campo de filtro */
+.filtro {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  /* margin-bottom: 10px; */
+}
+
+.form-group{
+  padding: 1px;
+}
+
+/* Estilos para o campo de filtro */
+#filtro_dateini {
+  display: none;
+  padding: 3px;
+  font-size: 16px;
+  width: 150px;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+/* Estilos para os botões */
+.btn-open-popup, .btn-pdf{
+  padding: 8px 20px;
+  font-size: 15px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px; /* Espaçamento entre os botões */
+  margin-bottom: 10px;
+}
+
+.btn-open-popup{
+  background-color: #3c7001;
+}
+
+.btn-pdf{
+  background-color: #343A40;
+}
+
+/* Estilos para os botões */
+.btn-editar, .btn-excluir {
+  padding: 5px 5px;
+  width: 60px;
+  font-size: 12px; 
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 5x;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+.btn-editar{
+  background-color: #5b9be0;  
+}
+
+.btn-excluir{
+  background-color: #f03501;  
+}
+
+/* Estilos para a tabela */
+#produtos-table {
+  margin: 5px auto 10px auto; /* topo, laterais (auto), baixo */
+  width: 95%;
+  font-size: 14px; 
+  /* margin-bottom: 20px;
+  margin-top: 10px; */
+}
+
+#produtos-table th,
+#produtos-table td {
+  padding: 5px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  max-width: 150px; /* Exemplo: limita a largura máxima das células */
+  overflow: hidden; /* Impede que o conteúdo transborde */
+  text-overflow: ellipsis; /* Adiciona "..." ao final do texto se for cortado */
+}
+
+#produtos-table th {
+  background-color: #343A40;
+  color: #fff;
+}
+
+#produtos-table tbody tr:hover {
+  background-color: #ddd;
+}
+
