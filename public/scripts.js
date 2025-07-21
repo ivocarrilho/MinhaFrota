@@ -3,6 +3,7 @@
 
     // const IP = "localhost"; //IP ou URL do servidor
     const IP = "35.82.48.229"; //IP ou URL do servidor
+    // const IP = "192.168.1.107"; //IP ou URL do servidor
 
     // Formulario
     const openFormButton  = document.getElementById('open-form-popup');
@@ -41,7 +42,7 @@
 
     let currentPage = 1; // Página inicial
     let produtos = []; // Array para armazenar todos os produtos
-    let itensPorPagina = 10; // Quantidade de itens por página
+    let itensPorPagina = 50; // Quantidade de itens por página
 
     function carregarProdutos(campo, valor) {
         const xhr = new XMLHttpRequest();
