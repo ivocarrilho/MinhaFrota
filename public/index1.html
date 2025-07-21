@@ -14,7 +14,7 @@
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Minha Frota - Infitech</a>
+    <a class="navbar-brand" href="#">Minha Frota</a>
     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -151,16 +151,14 @@
                     </div>
                     <div class="form-group">
                         <label for="nome">* Motorista</label>
-                        <input class="form-control" type="text" id="nome" name="nome" required>
-                    </div>
+                        <input class="form-control" type="text" id="nome" name="nome" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" required>
+                    </div>                   
                     <div class="form-group">
                         <label for="carro">* Carro:</label>
                         <select class="form-control" id="carro" name="carro" required>
                           <option value="">Selecione o carro</option>
                           <option value="S10-POV9368">S10-POV9368</option>
                           <option value="S10-POL9C08">S10-POL9C08</option>
-						  <option value="S10-TEE3D28">S10-TEE3D28</option>
-						  <option value="Argo-TEE1A38">Argo-TEE1A38</option>
                           <option value="Fiat-OIM6474">Fiat-OIM6474</option>
                           <option value="Fiat-OCG9297">Fiat-OCG9297</option>
                           <option value="HR-NQP6392">HR-NQP6392</option>
@@ -184,7 +182,7 @@
                     </div>
                     <div class="form-group">
                       <label for="kmfin">* Destino</label>
-                      <input class="form-control" type="text" id="destino" name="destino" required>
+                      <input class="form-control" type="text" id="destino" name="destino" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" required>
                    </div>
                     <div class="form-group">
                       <!-- <label for="observacao">Observação</label>
