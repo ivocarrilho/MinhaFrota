@@ -382,25 +382,42 @@
         if (valor == '') carregarProdutos();
         else carregarProdutos(campo, valor);        
     });
+
+    // Função para remover a coluna da tabela
+    function removerColuna(tabela, indiceColuna) {
+    const linhas = tabela.rows;
+    for (let i = 0; i < linhas.length; i++) {
+        if (linhas[i].cells.length > indiceColuna) {
+        linhas[i].deleteCell(indiceColuna);
+        }
+    }
+    }
   
     generationPdf.addEventListener('click', function() {
-        
-        const textoExtra = '<div style="margin-top: 20px; font-size: 16px;"><h2>Controle de Veículos</h2></div>';
-        const element = document.getElementById('produtos-table');
+   
+        // Clonar a tabela para não alterar a original
+        const tabelaOriginal = document.getElementById('produtos-table');
+        const tabelaClone = tabelaOriginal.cloneNode(true);
 
+        // Remover a 3ª coluna (índice 2)
+        removerColuna(tabelaClone, 11);
+
+        // Criar um wrapper temporário para o conteúdo
+        const wrapper = document.createElement('div');
+        wrapper.appendChild(tabelaClone);
+
+        // Configurar PDF
         const opt = {
-          margin:       10,
-          filename:     'Viagens.pdf',
-          image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2 },
-          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+        margin: [5, 5, 5, 5],
+        filename: 'Viagens.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
         };
-        
-        // Concatenar o texto extra com o conteúdo da tabela
-        const conteudoHTML = textoExtra + element.outerHTML;
-        
-        html2pdf().from(conteudoHTML).set(opt).save();
-      
+
+        // Gerar PDF
+        html2pdf().from(wrapper).set(opt).save();
+
     });
 
     // Carrega os produtos ao carregar a página inicialmente

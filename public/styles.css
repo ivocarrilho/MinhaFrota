@@ -97,15 +97,13 @@
 /* Estilos para a tabela */
 #produtos-table {
   margin: 5px auto 10px auto; /* topo, laterais (auto), baixo */
-  width: 95%;
-  font-size: 14px; 
-  /* margin-bottom: 20px;
-  margin-top: 10px; */
+  width: 98%;
+  font-size: 12px; 
 }
 
 #produtos-table th,
 #produtos-table td {
-  padding: 5px;
+  padding: 4px 6px;
   text-align: center;
   border-bottom: 1px solid #ddd;
   max-width: 150px; /* Exemplo: limita a largura máxima das células */
