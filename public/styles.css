@@ -105,7 +105,7 @@
 #produtos-table td {
   padding: 4px 6px;
   text-align: center;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid gray;
   max-width: 150px; /* Exemplo: limita a largura máxima das células */
   overflow: hidden; /* Impede que o conteúdo transborde */
   text-overflow: ellipsis; /* Adiciona "..." ao final do texto se for cortado */

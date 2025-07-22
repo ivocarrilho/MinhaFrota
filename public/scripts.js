@@ -105,8 +105,27 @@
         // Itera sobre os produtos e cria as linhas da tabela para a página atual
         produtos.slice(inicio, fim).forEach(produto => {
             const row = document.createElement('tr');
-            row.innerHTML = `
-                
+
+            // Se km final estiver vazio, muda a cor da linha
+            if (!produto.kmfin || !produto.horafin) {
+                row.style.backgroundColor = '#b1f5c1ff'; // vermelho claro
+            }
+
+            // Adiciona efeito hover via JS
+            row.addEventListener('mouseover', () => {
+                row.style.backgroundColor = '#ddd';
+            });
+
+            row.addEventListener('mouseout', () => {
+                // Se km final estiver vazio, volta para vermelho claro
+                if (!produto.kmfin || !produto.horafin) {
+                    row.style.backgroundColor = '#b1f5c1ff';
+                } else {
+                    row.style.backgroundColor = ''; // volta para padrão
+                }
+            });
+
+            row.innerHTML = `               
                 <td>${produto.dataini}</td>
                 <td>${produto.datafin}</td>
                 <td>${produto.nome}</td>
