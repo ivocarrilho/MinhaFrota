@@ -1,9 +1,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
 
-    // const IP = "localhost"; //IP ou URL do servidor
-    const IP = "35.82.48.229"; //IP ou URL do servidor
-    // const IP = "192.168.1.107"; //IP ou URL do servidor
+    const IP = "35.82.48.229"; 
 
     // Formulario
     const openFormButton  = document.getElementById('open-form-popup');
@@ -148,8 +146,7 @@
         // Atualiza os controles de paginação
         atualizarControlesPaginacao(totalPaginas);
     }
-
-    
+   
     // Função para atualizar os controles de navegação entre páginas
     function atualizarControlesPaginacao(totalPaginas) {
         paginationContainer.innerHTML = ''; // Limpa os botões de navegação
@@ -243,110 +240,105 @@
         }));
     });
 
-    // Função para editar um produto
+    let produtoSelecionado = null;
+    let idSelecionado = null;
+    let dataFormatada = '';
+    let horaFormatada = '';
+
+    // Função para finalizar
+    function abrirPopupFinalizacao(produto, id) {
+        produtoSelecionado = produto;
+        idSelecionado = id;
+
+        const dataAtual = new Date();
+        dataFormatada = dataAtual.toLocaleDateString('pt-BR');
+        const hora = String(dataAtual.getHours()).padStart(2, '0');
+        const minuto = String(dataAtual.getMinutes()).padStart(2, '0');
+        horaFormatada = `${hora}:${minuto}`;
+
+        document.getElementById('inputKmfin').value = produto.kmfin || '';
+        document.getElementById('inputObs').value = 'R$ 0,00';
+
+        // Só agora aplica o display:flex
+        document.getElementById('popupFinalizacao').style.display = 'flex';
+    }
+
+    function fecharPopup() {
+        document.getElementById('popupFinalizacao').style.display = 'none';
+        produtoSelecionado = null;
+        idSelecionado = null;
+    }
+
+    function confirmarFinalizacao() {
+        const kmfin = document.getElementById('inputKmfin').value.trim();
+        const observacao = document.getElementById('inputObs').value.trim();
+
+        const kminiInt = parseInt(produtoSelecionado.kmini);
+        const kmfinInt = parseInt(kmfin);
+
+        if (isNaN(kmfinInt)) {
+            alert('Preencha os valores!');
+        return;
+        }
+
+        if (kmfinInt < kminiInt || kmfin === '') {
+            alert('Km Final é menor que o Km Inicial!');
+        return;
+        }
+
+        const valorNumerico = parseFloat(
+        observacao.replace('R$', '').replace(/\s/g, '').replace(',', '.')
+        );
+
+        const updatedProduto = {
+            dataini: produtoSelecionado.dataini,
+            datafin: dataFormatada,
+            nome: produtoSelecionado.nome,
+            carro: produtoSelecionado.carro,
+            horaini: produtoSelecionado.horaini,
+            horafin: horaFormatada,
+            kmini: produtoSelecionado.kmini,
+            kmfin: kmfin,
+            destino: produtoSelecionado.destino,
+            kmpercorrido: kmfinInt - kminiInt,
+            observacao: valorNumerico || produtoSelecionado.observacao
+        };
+
+        const xhrUpdate = new XMLHttpRequest();
+        xhrUpdate.onreadystatechange = function () {
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+            carregarProdutos();
+                alert('Viagem finalizada com sucesso!');
+                fecharPopup();
+            } else {
+                console.error('Erro ao editar produto:', this.status);
+            }
+        }
+        };
+
+        xhrUpdate.open('PUT', `http://${IP}:3000/produtos/${idSelecionado}`, true);
+        xhrUpdate.setRequestHeader('Content-Type', 'application/json');
+        xhrUpdate.send(JSON.stringify(updatedProduto));
+    }
+    
+    document.getElementById('btnCancelar').addEventListener('click', fecharPopup);
+    document.getElementById('btnConfirmar').addEventListener('click', confirmarFinalizacao); 
+
     window.editarProduto = function(id) {
-
-        // Criando um novo objeto Date, que inicializa com a data e hora atuais
-        let dataAtual = new Date();
-        // Convertendo a data para uma string legível
-        let dataFormatada = dataAtual.toLocaleDateString(); // Formato padrão dependente do ambiente
-
-        // Obtendo componentes de hora
-        let hora    = dataAtual.getHours();
-        let minuto  = dataAtual.getMinutes();
-
-        // Adicionando zero à esquerda se necessário
-        if (hora < 10) {
-            hora = `0${hora}`;
-        }
-        if (minuto < 10) {
-            minuto = `0${minuto}`;
-        }
-
-        // Formatando para exibição
-        let horaFormatada = `${hora}:${minuto}`;
-
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             if (this.readyState === 4) {
-                if (this.status === 200) {
-                    const produto = JSON.parse(this.responseText);
-          
-                    if(produto.datafin == '' || produto.horafin == '' || produto.kmfin == '') {
-                            // Simulando edição no próprio campo
-                        // const dataini = prompt('Nova Data Inicial:', produto.dataini);
-                        // const datafin = prompt('Nova Data Final:', produto.datafin);
-                        // const nome    = prompt('Novo Nome:', produto.nome);
-                        // const carro   = prompt('Novo Carro:', produto.carro);
-                        // const horaini = prompt('Novo Horario Inicial:', produto.horaini);
-                        // const horafin = prompt('Novo Horario Final:', produto.horafin);
-                        // const kmini   = prompt('Novo Km Inicial:', produto.kmini);
-                        const kmfin      = prompt('Km Final:', produto.kmfin);
-                                  
-                        // Convertendo o valor para um número inteiro (caso seja válido)
-                        let kminiInt = parseInt(produto.kmini);
-                        let kmfinInt = parseInt(kmfin);
-
-                        // Verificando se o valor inserido é um número válido
-                        if (isNaN(kmfinInt)) {
-                            // Aqui você pode usar o novoKmFinal, que é um número inteiro
-                            alert('ERRO - O valor não é Número');
-                            return;
-                        } 
-
-                        if(kmfinInt < kminiInt || kmfin == '') {
-                            alert('ERRO - Km Final menor que o Km Inicial!');
-                            return;
-                        }
-
-                        // const observacao = prompt('Teve abastecimento? Valor em R$:', produto.observacao);
-
-                        let observacao = prompt('Teve abastecimento? Valor em R$:', 'R$ 0,00');
-
-                        // Remove "R$", espaços e troca vírgula por ponto
-                        let valorNumerico = parseFloat(observacao.replace('R$', '').replace(/\s/g, '').replace(',', '.'));
-
-                        // console.log('Valor numérico:', valorNumerico);
-                      
-                        const updatedProduto = {
-                            dataini: produto.dataini,
-                            // datafin: datafin || produto.datafin,
-                            datafin: dataFormatada, //salva data atual
-                            nome: produto.nome,
-                            carro: produto.carro,
-                            horaini: produto.horaini,
-                            // horafin: horafin || produto.horafin,
-                            horafin: horaFormatada, // salva hora atual
-                            kmini: produto.kmini,
-                            kmfin: kmfin || produto.kmfin,
-                            destino: produto.destino,
-                            kmpercorrido: kmfinInt - kminiInt,
-                            observacao: valorNumerico || produto.observacao
-                        };
-
-                        const xhrUpdate = new XMLHttpRequest();
-                        xhrUpdate.onreadystatechange = function() {
-                            if (this.readyState === 4) {
-                                if (this.status === 200) {
-                                    carregarProdutos(); // Atualiza a lista de produtos após editar
-                                    alert('Viagem finalizada com sucesso!');
-                                } else {
-                                    console.error('Erro ao editar produto:', this.status);
-                                }
-                            }
-                        };
-
-                        xhrUpdate.open('PUT', `http://${IP}:3000/produtos/${id}`, true);
-                        xhrUpdate.setRequestHeader('Content-Type', 'application/json');
-                        xhrUpdate.send(JSON.stringify(updatedProduto));
-                    }
-                    else {
-                        alert('A Viagem já foi finalizada!');
-                    }
-
+            if (this.status === 200) {
+                const produto = JSON.parse(this.responseText);
+                if (produto.datafin == '' || produto.horafin == '' || produto.kmfin == '') {
+                abrirPopupFinalizacao(produto, id);
                 } else {
-                    console.error('Erro ao buscar produto para edição:', this.status);
+                    alert('A Viagem já foi finalizada!');
                 }
+            } else {
+                console.error('Erro ao buscar produto para edição:', this.status);
+            }
             }
         };
 

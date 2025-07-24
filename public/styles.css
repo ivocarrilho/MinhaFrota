@@ -51,7 +51,7 @@
 }
 
 /* Estilos para os botões */
-.btn-open-popup, .btn-pdf{
+.btn-open-popup, .btn-pdf, .btn-cancelar-popup{
   padding: 8px 20px;
   font-size: 15px;
   color: #fff;
@@ -59,12 +59,16 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-right: 10px; /* Espaçamento entre os botões */
+  margin-right: 5px; /* Espaçamento entre os botões */
   margin-bottom: 10px;
 }
 
 .btn-open-popup{
   background-color: #3c7001;
+}
+
+.btn-cancelar-popup{
+  background-color: gray;
 }
 
 .btn-pdf{
