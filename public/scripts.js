@@ -66,7 +66,7 @@
   
                         document.getElementById('totalope').innerHTML = produtos.length;
                         document.getElementById('totalkm').innerHTML = somaKm + ' km';
-                        document.getElementById('totalabs').innerHTML = 'R$ ' + totalAbs;
+                        document.getElementById('totalabs').innerHTML = 'R$ ' + totalAbs.toFixed(2);
 
                     } catch (error) {
                         console.error('Erro ao processar resposta JSON:', error);
@@ -124,22 +124,24 @@
                 }
             });
 
-            row.innerHTML = `               
-                <td>${produto.dataini}</td>
-                <td>${produto.datafin}</td>
+            row.innerHTML = `  
+                <td class="actions">
+                    <button class="btn-editar" onclick="editarProduto(${produto.id})">Finalizar</button>                 
+                </td>                          
                 <td>${produto.nome}</td>
                 <td>${produto.carro}</td>
+                <td>${produto.dataini}</td>
+                <td>${produto.datafin}</td>
                 <td>${produto.horaini}</td>
                 <td>${produto.horafin}</td>
                 <td>${produto.kmini}</td>
                 <td>${produto.kmfin}</td>
                 <td>${produto.kmpercorrido + ' Km'}</td>
                 <td>${produto.destino}</td>
-                <td>${produto.observacao}</td>
+                <td>${'R$ '+ produto.observacao}</td>
                 <td class="actions">
-                    <button class="btn-editar" onclick="editarProduto(${produto.id})">Finalizar</button>
-                    <button class="btn-excluir" onclick="excluirProduto(${produto.id})">Excluir</button>
-                </td>
+                    <button class="btn-excluir" onclick="excluirProduto(${produto.id})">Excluir</button>                
+                </td>                              
             `;
             produtosTable.appendChild(row);
         });
@@ -400,12 +402,12 @@
 
     // Função para remover a coluna da tabela
     function removerColuna(tabela, indiceColuna) {
-    const linhas = tabela.rows;
-    for (let i = 0; i < linhas.length; i++) {
-        if (linhas[i].cells.length > indiceColuna) {
-        linhas[i].deleteCell(indiceColuna);
+        const linhas = tabela.rows;
+        for (let i = 1; i < linhas.length; i++) {
+            if (linhas[i].cells.length > indiceColuna) {
+            linhas[i].deleteCell(indiceColuna);
+            }
         }
-    }
     }
   
     generationPdf.addEventListener('click', function() {
@@ -414,7 +416,7 @@
         const tabelaOriginal = document.getElementById('produtos-table');
         const tabelaClone = tabelaOriginal.cloneNode(true);
 
-        // Remover a 3ª coluna (índice 2)
+        removerColuna(tabelaClone, 0);
         removerColuna(tabelaClone, 11);
 
         // Criar um wrapper temporário para o conteúdo
@@ -426,7 +428,7 @@
         margin: [5, 5, 5, 5],
         filename: 'Viagens.pdf',
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
+        html2canvas: { scale: 1.5 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
         };
 

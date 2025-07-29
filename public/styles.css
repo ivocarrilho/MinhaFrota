@@ -11,7 +11,7 @@
 }
 
 .custom-navbar {
-  background-color: #123456; /* sua cor personalizada */
+  background-color: rgb(0, 50, 0);
 }
 
 .scrollable-table {
@@ -114,13 +114,13 @@
   padding: 4px 6px;
   text-align: center;
   border-bottom: 1px solid gray;
-  max-width: 150px; /* Exemplo: limita a largura máxima das células */
+  max-width: 130px; /* Exemplo: limita a largura máxima das células */
   overflow: hidden; /* Impede que o conteúdo transborde */
   text-overflow: ellipsis; /* Adiciona "..." ao final do texto se for cortado */
 }
 
 #produtos-table th {
-  background-color: #123456;
+  background-color: rgb(43, 39, 39);
   color: #fff;
 }
 
