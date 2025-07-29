@@ -41,6 +41,7 @@
     let currentPage = 1; // Página inicial
     let produtos = []; // Array para armazenar todos os produtos
     let itensPorPagina = 50; // Quantidade de itens por página
+    let maxPaginas = 10;
 
     function carregarProdutos(campo, valor) {
         const xhr = new XMLHttpRequest();
@@ -132,7 +133,7 @@
                 <td>${produto.horafin}</td>
                 <td>${produto.kmini}</td>
                 <td>${produto.kmfin}</td>
-                <td>${produto.kmpercorrido}</td>
+                <td>${produto.kmpercorrido + ' Km'}</td>
                 <td>${produto.destino}</td>
                 <td>${produto.observacao}</td>
                 <td class="actions">
@@ -143,8 +144,10 @@
             produtosTable.appendChild(row);
         });
 
-        // Atualiza os controles de paginação
-        atualizarControlesPaginacao(totalPaginas);
+
+        if(totalPaginas >= maxPaginas) atualizarControlesPaginacao(maxPaginas);
+        else atualizarControlesPaginacao(totalPaginas);
+     
     }
    
     // Função para atualizar os controles de navegação entre páginas
@@ -369,14 +372,15 @@
         var select = document.getElementById('filtro');
         var filtroDateini = document.getElementById('filtro_dateini');
         var filtroNome = document.getElementById('filtro-nome');
-    
+     
         if (select.value === 'dataini') {
             filtroDateini.style.display = 'block';
             filtroNome.style.display    = 'none';
         } else {
             filtroDateini.style.display = 'none';
             filtroNome.style.display    = 'block';
-        }
+            carregarProdutos(); 
+        }        
     });
 
     filtroDateini.addEventListener('input', function() {
