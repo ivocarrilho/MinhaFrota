@@ -211,7 +211,7 @@
             kmpercorrido = 0;
         }
 
-        if(observacao == '') observacao = 0;
+        if(observacao == '') observacao = '0.00';
 
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
@@ -262,7 +262,8 @@
         horaFormatada = `${hora}:${minuto}`;
 
         document.getElementById('inputKmfin').value = produto.kmfin || '';
-        document.getElementById('inputObs').value = 'R$ 0,00';
+        document.getElementById('inputDestino').value = produto.destino;
+        document.getElementById('inputObs').value = produto.observacao; // valor
 
         // Só agora aplica o display:flex
         document.getElementById('popupFinalizacao').style.display = 'flex';
@@ -275,13 +276,15 @@
     }
 
     function confirmarFinalizacao() {
+
         const kmfin = document.getElementById('inputKmfin').value.trim();
+        const destino = document.getElementById('inputDestino').value.trim();
         const observacao = document.getElementById('inputObs').value.trim();
 
         const kminiInt = parseInt(produtoSelecionado.kmini);
         const kmfinInt = parseInt(kmfin);
 
-        if (isNaN(kmfinInt)) {
+        if (isNaN(kmfinInt) || destino ==='') {
             alert('Preencha os valores!');
         return;
         }
@@ -292,7 +295,7 @@
         }
 
         const valorNumerico = parseFloat(
-        observacao.replace('R$', '').replace(/\s/g, '').replace(',', '.')
+            observacao.replace('R$', '').replace(/\s/g, '').replace(',', '.')
         );
 
         const updatedProduto = {
@@ -304,7 +307,7 @@
             horafin: horaFormatada,
             kmini: produtoSelecionado.kmini,
             kmfin: kmfin,
-            destino: produtoSelecionado.destino,
+            destino: destino || produtoSelecionado.destino,
             kmpercorrido: kmfinInt - kminiInt,
             observacao: valorNumerico || produtoSelecionado.observacao
         };

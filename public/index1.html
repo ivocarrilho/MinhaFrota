@@ -136,7 +136,11 @@
           <input class="form-control" type="number" id="inputKmfin" min="0" step="1" style="width:100%;">
         </div>
         <div style="margin-top:10px;">
-          <label for="inputObs"> Valor do Abastecimento</label>
+          <label for="inputDestino">* Destino</label>
+          <input class="form-control" type="text" id="inputDestino" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();">
+        </div>
+        <div style="margin-top:10px;">
+          <label for="inputObs"> R$ Total de Abastecimento</label>
           <input class="form-control" type="number" id="inputObs" min="0.00" step="0.01" placeholder="R$ 0,00" style="width:100%;">
         </div>
         <div style="margin-top:15px; text-align:right;">
@@ -209,7 +213,7 @@
                       <!-- <label for="observacao">Observação</label>
                       <textarea class="form-control" id="observacao" name="observacao"></textarea> -->                  
                       <label for="observacao"> R$ Abastecimento</label>
-                      <input class="form-control" type="number" min="0.00" step="0.01" id="observacao" name="observacao">
+                      <input class="form-control" type="number" min="0.00" step="0.01" id="observacao" placeholder="R$ 0,00" name="observacao">
                     </div>                
                     <button id="btn-salvar" type="submit" class="btn-open-popup">Salvar</button>
                     <button type="button" class="btn-cancelar-popup" data-dismiss="modal">Cancelar</button>
