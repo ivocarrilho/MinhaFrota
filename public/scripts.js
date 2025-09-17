@@ -25,7 +25,7 @@
       
         // Atribuindo a data formatada ao input date
         document.getElementById('dataini').value = dataFormatada;
-        document.getElementById('datafin').value = dataFormatada;
+        document.getElementById('datafin').value = dataFormatada; 
 
         // Atribuindo a hora formatada ao input time
         document.getElementById('horaini').value = horaFormatada;
@@ -255,16 +255,23 @@
         produtoSelecionado = produto;
         idSelecionado = id;
 
-        const dataAtual = new Date();
-        dataFormatada = dataAtual.toLocaleDateString('pt-BR');
+        let dataAtual = new Date();
+        // Formatando a data no formato adequado para o input date (AAAA-MM-DD)
+        let ano = dataAtual.getFullYear();
+        let mes = (dataAtual.getMonth() + 1).toString().padStart(2, '0'); // Meses são zero-indexed
+        let dia = dataAtual.getDate().toString().padStart(2, '0');
+        let dataFormatada = `${ano}-${mes}-${dia}`;
+
         const hora = String(dataAtual.getHours()).padStart(2, '0');
         const minuto = String(dataAtual.getMinutes()).padStart(2, '0');
         horaFormatada = `${hora}:${minuto}`;
 
+        document.getElementById('inputdatafin').value = dataFormatada;
+        document.getElementById('inputhorafin').value = horaFormatada;
         document.getElementById('inputKmfin').value = produto.kmfin || '';
         document.getElementById('inputDestino').value = produto.destino;
         document.getElementById('inputObs').value = produto.observacao; // valor
-
+   
         // Só agora aplica o display:flex
         document.getElementById('popupFinalizacao').style.display = 'flex';
     }
@@ -277,6 +284,9 @@
 
     function confirmarFinalizacao() {
 
+        const datafin = formatarDataBrasileiro(document.getElementById('inputdatafin').value); 
+        const horafin = document.getElementById('inputhorafin').value.trim();
+        
         const kmfin = document.getElementById('inputKmfin').value.trim();
         const destino = document.getElementById('inputDestino').value.trim();
         const observacao = document.getElementById('inputObs').value.trim();
@@ -300,11 +310,11 @@
 
         const updatedProduto = {
             dataini: produtoSelecionado.dataini,
-            datafin: dataFormatada,
+            datafin: datafin,
             nome: produtoSelecionado.nome,
             carro: produtoSelecionado.carro,
             horaini: produtoSelecionado.horaini,
-            horafin: horaFormatada,
+            horafin: horafin,
             kmini: produtoSelecionado.kmini,
             kmfin: kmfin,
             destino: destino || produtoSelecionado.destino,
